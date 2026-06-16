@@ -31,7 +31,7 @@ services:
       - "traefik.http.routers.rocketchat.tls.certresolver=myresolver"
 
   mongodb:
-    image: mongo:7
+    image: mongo:8
     restart: always
     user: root
     command: ["mongod", "--replSet", "rs0", "--oplogSize", "128", "--bind_ip_all"]
@@ -39,7 +39,7 @@ services:
       - ./data/mongodb:/data/db
 
   mongo-init-replica:
-    image: mongo:7
+    image: mongo:8
     restart: "no"
     command: >
       bash -c "for i in `seq 1 30`; do
