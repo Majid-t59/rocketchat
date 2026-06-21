@@ -57,7 +57,7 @@ fi
 print_step "Installation Directory"
 
 # Default to a clean directory in the user's home
-DEFAULT_DIR="$HOME/netadminplus-rocketchat"
+DEFAULT_DIR="$HOME/rocketchat"
 
 echo -e "    Default installation path: ${CYAN}$DEFAULT_DIR${NC}"
 read -p "    Do you want to install here? (y/n): " DIR_CONFIRM < /dev/tty
