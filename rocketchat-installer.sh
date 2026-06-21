@@ -122,7 +122,7 @@ if [ "$SKIP_GENERATION" != "true" ]; then
 
     # Mirror Check
     print_info "Checking Docker Hub accessibility..."
-    if curl --connect-timeout 3 -s https://hub.docker.com >/dev/null; then
+    if curl --connect-timeout 3 -s https://docker.arvancloud.ir >/dev/null; then
         print_success "Docker Hub is accessible."
     else
         echo -e "${YELLOW}    Warning: Docker Hub seems blocked.${NC}"
