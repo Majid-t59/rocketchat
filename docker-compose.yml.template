@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   rocketchat:
-    image: rocket.chat:${RC_VERSION:-latest}
+    image: rocket.chat:8.4.1
     restart: always
     command: >
       bash -c "for i in `seq 1 30`; do
