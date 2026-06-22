@@ -126,7 +126,7 @@ if [ "$SKIP_GENERATION" != "true" ]; then
         print_success "Docker Hub is accessible."
     else
         echo -e "${YELLOW}    Warning: Docker Hub seems blocked.${NC}"
-        read -p "    Enter a Docker Mirror URL (e.g., https://docker.iranserver.com) or press Enter to skip: " DOCKER_MIRROR < /dev/tty
+        read -p "    Enter a Docker Mirror URL (e.g., https://docker.arvancloud.ir) or press Enter to skip: " DOCKER_MIRROR < /dev/tty
     fi
 fi
 
