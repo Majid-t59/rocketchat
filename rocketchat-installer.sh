@@ -151,18 +151,52 @@ fi
 # --- 6. Install Docker ---
 print_step "Installing/Updating Docker"
 
+install_docker_fallback() {
+    print_info "Trying fallback installation via apt..."
+
+    apt update -y
+
+    apt install -y docker.io
+
+    systemctl enable --now docker
+
+    if ! command -v docker &> /dev/null; then
+        print_error "Docker install via apt failed!"
+        exit 1
+    fi
+
+    print_success "Docker installed via apt."
+}
+
+# Try official installer first
 if ! command -v docker &> /dev/null; then
     curl -fsSL https://get.docker.com -o get-docker.sh
+
     if [ ! -z "$DOCKER_MIRROR" ]; then
-        sh get-docker.sh --mirror "$DOCKER_MIRROR"
+        sh get-docker.sh --mirror "$DOCKER_MIRROR" || install_docker_fallback
     else
-        sh get-docker.sh
+        sh get-docker.sh || install_docker_fallback
     fi
-    rm get-docker.sh
-    print_success "Docker installed."
+
+    rm -f get-docker.sh
 else
     print_success "Docker already installed."
 fi
+
+# Ensure compose v2 exists
+if ! docker compose version &> /dev/null; then
+    print_info "Installing Docker Compose v2..."
+
+    if command -v apt &> /dev/null; then
+        apt install -y docker-compose-v2 || {
+            print_error "Compose v2 install failed via apt"
+        }
+    fi
+fi
+
+# Final check
+docker --version || install_docker_fallback
+docker compose version || print_error "Docker Compose is still missing!"
 
 # Configure Mirror in daemon.json
 if [ -n "$DOCKER_MIRROR" ]; then
